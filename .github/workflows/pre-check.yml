@@ -1,0 +1,74 @@
+name: Pre-Check
+
+on:
+  push: 
+
+jobs:
+  lint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18" 
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install dependencies using Yarn
+        run: yarn install
+
+      - name: Run ESLint with Yarn
+        run: yarn run lint
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18" 
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install dependencies using Yarn
+        run: yarn install
+
+      - name: Run Unit Tests
+        run: yarn test
+
+  build:
+    name: Backend-Build
+    runs-on: ubuntu-latest
+    needs: 
+      - lint
+      - test 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18" 
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install dependencies using Yarn
+        run: yarn install
+
+      - name: Nestjs Build
+        run: npm run build
+
+ 

@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
-import { SKIP_INTERCEPTOR } from 'src/decorators/public.decorator';
+import { SKIP_INTERCEPTOR } from 'src/common/decorators/public.decorator';
 
 export interface Response<T> {
   data: T;
