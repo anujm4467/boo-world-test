@@ -4,8 +4,8 @@ import { mkdirSync, writeFileSync } from 'fs';
 
 export function initializeSwagger(app: INestApplication): void {
   const options = new DocumentBuilder()
-    .setTitle('Your API Title')
-    .setDescription('Your API Description')
+    .setTitle('Boo World')
+    .setDescription('Boo World API Description')
     .setVersion('1.0')
     .build();
 
@@ -16,5 +16,5 @@ export function initializeSwagger(app: INestApplication): void {
     writeFileSync('.postman/swagger-spec.json', JSON.stringify(document));
   }
 
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('api', app, document);
 }
