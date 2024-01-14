@@ -62,9 +62,9 @@ export class CommentRepository {
   }
 
   /**
-   * Retrieves comments from the database based on the profile ID and optional tag filter.
+   * Retrieves comments from the database based on the profile ID, optional tag filter, and sorting option.
    *
-   * @param {CommentQueryDto} query - The DTO containing the profile ID and optional tag filter.
+   * @param {CommentQueryDto} query - The DTO containing the profile ID, optional tag filter, and sorting option.
    * @returns {Promise<IComment[]>} A promise that resolves with an array of retrieved comments.
    */
   async getCommentsByProfileId(query: CommentQueryDto): Promise<IComment[]> {
@@ -73,9 +73,19 @@ export class CommentRepository {
       ...(query.tag && { systemTag: query.tag }),
     };
 
+    const sortOptions: any = {};
+
+    // If 'best' is true, sort by likeCount in descending order
+    if (query.best) {
+      sortOptions.likeCount = -1;
+    } else {
+      sortOptions._id = 1;
+    }
+
     const comments = await this.db
       .collection<IComment>(CollectionName.Comments)
       .find(filter)
+      .sort(sortOptions)
       .toArray();
 
     this.logger.debug('Retrieved comments:', comments);

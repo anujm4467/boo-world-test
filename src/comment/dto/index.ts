@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsIn, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsIn,
+  IsOptional,
+  IsBoolean,
+} from 'class-validator';
 
 export class CommentDto {
   @ApiProperty({
@@ -53,4 +59,12 @@ export class CommentQueryDto {
   @IsOptional()
   @IsString()
   tag?: string;
+
+  @ApiProperty({
+    example: true,
+    description: 'Sort comments by most likes (optional)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  best?: boolean;
 }
